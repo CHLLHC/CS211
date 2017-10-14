@@ -1,7 +1,7 @@
 all: defgcc p11 p12 p13 p23 p24O0 p24O1 p24O2 p24O3 newgcc p24N0 p24N1 p24N2 p24N3
 	
 defgcc:
-	module purge
+	shell module purge
 
 p11:
 	gcc -o p11 1p1.c
@@ -28,7 +28,7 @@ p24O3:
 	gcc -lrt -O3 -o p24O3 2p4.c
 
 newgcc:
-	module load gcc-4.7.2
+	shell module load gcc-4.7.2
 
 p24N0:
 	gcc -lrt -o p24N0 2p4.c
@@ -46,16 +46,16 @@ clean:
 	rm p11 p12 p13 p23 p24O0 p24O1 p24O2 p24O3 p24N0 p24N1 p24N2 p24N3
 	
 run:
-	qsub p11.job
-	qsub p12.job
-	qsub p13.job
-	qsub p23.job
-	qsub p24O0.job
-	qsub p24O1.job
-	qsub p24O2.job
-	qsub p24O3.job
-	qsub p24N0.job
-	qsub p24N1.job
-	qsub p24N2.job
-	qsub p24N3.job
+	shell qsub p11.job
+	shell qsub p12.job
+	shell qsub p13.job
+	shell qsub p23.job
+	shell qsub p24O0.job
+	shell qsub p24O1.job
+	shell qsub p24O2.job
+	shell qsub p24O3.job
+	shell qsub p24N0.job
+	shell qsub p24N1.job
+	shell qsub p24N2.job
+	shell qsub p24N3.job
 	
