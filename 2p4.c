@@ -115,8 +115,8 @@ int main(int argc, char* argv[]) {
 	//BLOCKED ALGORITHM
 	for (i = 0; i < 10; ++i) {
 		memset(c1, 0, sizeof(double)*n*n);
-		bijk(a, b, c1, n, 2);
-		maxDiff = CheckMaxDiff(c, c1, blocksize[i]);
+		bijk(a, b, c1, n, blocksize[i]);
+		maxDiff = CheckMaxDiff(c, c1, n);
 		printf("Maximum difference to the reference result is: %e\n", maxDiff);
 	}
 	free(a);
