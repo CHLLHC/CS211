@@ -289,8 +289,8 @@ double CheckMaxDiff(double a[], double b[], int n) {
 
 int main(int argc, char* argv[]) {
 
-	//int blcokSize[6] = { 2,4,8,16,32,64 };
-	int i, j, n, B = 16;
+	int blcokSize[6] = { 2,4,8,16,32,64 };
+	int i, j, n, B;
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
