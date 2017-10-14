@@ -152,7 +152,7 @@ int main(int argc, char* argv[]) {
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
-	n = 2048;
+	n = 20;
 	a = malloc(n * n * sizeof(double));
 	b = malloc(n * n * sizeof(double));
 	c = malloc(n * n * sizeof(double));
