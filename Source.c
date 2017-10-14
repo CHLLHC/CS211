@@ -351,18 +351,32 @@ int main(int argc, char* argv[]) {
 		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
 		bijk(a, b, c1, n, B);
+	}
+	for (i = 0; i < 6; ++i) {
+		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
 		bikj(a, b, c1, n, B);
+	}
+	for (i = 0; i < 6; ++i) {
+		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
 		bjik(a, b, c1, n, B);
+	}
+	for (i = 0; i < 6; ++i) {
+		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
 		bjki(a, b, c1, n, B);
+	}
+	for (i = 0; i < 6; ++i) {
+		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
 		bkij(a, b, c1, n, B);
+	}
+	for (i = 0; i < 6; ++i) {
+		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
 		bkji(a, b, c1, n, B);
 	}
-
 	free(a);
 	free(b);
 	free(c);
