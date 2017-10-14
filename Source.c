@@ -128,7 +128,7 @@ void skji(double a[], double b[], double c[], int n) {
 	printf("Simple kji, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
 }
 
-void bkji(double a[], double b[], double c[], int n, int B) {
+void bijk(double a[], double b[], double c[], int n, int B) {
 	struct timespec begin, end, diff;
 	double time;
 	int i, j, k, i1, j1, k1;
@@ -149,7 +149,7 @@ void bkji(double a[], double b[], double c[], int n, int B) {
 
 	clock_gettime(CLOCK_MONOTONIC, &end);
 	diff = HDdiff(begin, end);
-	printf("Simple kji, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+	printf("Blocked ijk, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
 }
 
 double CheckMaxDiff(double a[], double b[], int n) {
