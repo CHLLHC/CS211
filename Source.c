@@ -325,6 +325,7 @@ int main(int argc, char* argv[]) {
 	*/
 
 	//BLOCKED ALGORITHM
+	/*
 	memset(c1, 0, sizeof(double)*n*n);
 	bijk(a, b, c1, n, B);
 	CheckMaxDiff(c, c1, n);
@@ -343,15 +344,14 @@ int main(int argc, char* argv[]) {
 	memset(c1, 0, sizeof(double)*n*n);
 	bkji(a, b, c1, n, B);
 	CheckMaxDiff(c, c1, n);
+	*/
 
 
-
-
-	/*for (i = 0; i < 6; ++i) {
+	for (i = 0; i < 6; ++i) {
 		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
 		bijk(a, b, c1, n, B);
-	}*/
+	}
 
 	free(a);
 	free(b);
