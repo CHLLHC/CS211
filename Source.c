@@ -3,14 +3,50 @@
 #include <string.h>
 #include <time.h>
 
+struct timespec HDdiff(struct timespec start, struct timespec end)
+{
+	struct timespec temp;
+	if ((end.tv_nsec - start.tv_nsec)<0) {
+		temp.tv_sec = end.tv_sec - start.tv_sec - 1;
+		temp.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
+	}
+	else {
+		temp.tv_sec = end.tv_sec - start.tv_sec;
+		temp.tv_nsec = end.tv_nsec - start.tv_nsec;
+	}
+	return temp;
+}
+
+
+
+
 void sijk(double a[], double b[], double c[], int n) {
+	struct timespec begin, end, diff;
+	double time;
+	int i, j, k;
+
+	clock_gettime(CLOCK_MONOTONIC, &begin);
+	for (i = 0; i < n; ++i)
+		for (j = 0; j < n; ++j) {
+			register double r = c[i*n + j];
+			for (k = 0; k < n; ++k) {
+				r += a[i*n + k] * b[k*n + j];
+			}
+			c[i*n + j] = r;
+		}
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	diff = HDdiff(begin,end);
+	printf("Simple ijk, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+}
+
+void sjik(double a[], double b[], double c[], int n) {
 	clock_t begin, end, diff;
 	double time;
 	int i, j, k;
 
 	begin = clock();
-	for (i = 0; i < n; ++i)
-		for (j = 0; j < n; ++j) {
+	for (j = 0; j < n; ++j)
+		for (i = 0; i < n; ++i) {
 			register double r = c[i*n + j];
 			for (k = 0; k < n; ++k) {
 				r += a[i*n + k] * b[k*n + j];
@@ -20,8 +56,30 @@ void sijk(double a[], double b[], double c[], int n) {
 	end = clock();
 	diff = end - begin;
 	time = (double)diff / CLOCKS_PER_SEC;
-	printf("Simple ijk, n=%d, Time:%.3f Seconds.\n", n, diff, time);
+	printf("Simple jik, n=%d, Time:%.3f Seconds.\n", n, diff, time);
 }
+
+void sikj(double a[], double b[], double c[], int n) {
+	clock_t begin, end, diff;
+	double time;
+	int i, j, k;
+
+	begin = clock();
+	for (i = 0; i < n; ++i) 
+	for (k = 0; k < n; ++k) {
+			register double r = a[i*n + k];
+			for (j = 0; j < n; ++j) {
+				c[i*n + j] += r * b[k*n + j];
+			}
+		}
+	end = clock();
+	diff = end - begin;
+	time = (double)diff / CLOCKS_PER_SEC;
+	printf("Simple jik, n=%d, Time:%.3f Seconds.\n", n, diff, time);
+}
+
+
+
 
 void dgemm2(double a[], double b[], double c[], int n) {
 	clock_t begin, end, diff;
