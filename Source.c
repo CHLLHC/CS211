@@ -149,7 +149,7 @@ void bijk(double a[], double b[], double c[], int n, int B) {
 
 	clock_gettime(CLOCK_MONOTONIC, &end);
 	diff = HDdiff(begin, end);
-	printf("Blocked ijk, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+	printf("Blocked ijk, n=%d, B=%d, Time:%ld seconds and %ld nanoseconds.\n", n, B, diff.tv_sec, diff.tv_nsec);
 }
 
 double CheckMaxDiff(double a[], double b[], int n) {
@@ -176,7 +176,7 @@ int main(int argc, char* argv[]) {
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
-	n = 128;
+	n = 512;
 	a = malloc(n * n * sizeof(double));
 	b = malloc(n * n * sizeof(double));
 	c = malloc(n * n * sizeof(double));
