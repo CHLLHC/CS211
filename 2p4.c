@@ -94,7 +94,7 @@ double CheckMaxDiff(double a[], double b[], int n) {
 
 
 int main(int argc, char* argv[]) {
-
+	int blocksize[10] = { 2,4,8,16,32,64,128,256,512,1024 };
 	int i, j, n;
 	double *a, *b, *c, *c1;
 	double maxDiff;
@@ -113,49 +113,12 @@ int main(int argc, char* argv[]) {
 	printf("This is the reference result.\n");
 
 	//BLOCKED ALGORITHM
-	memset(c1, 0, sizeof(double)*n*n);
-	bijk(a, b, c1, n, 2);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 4);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 8);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 16);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 32);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 64);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 128);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 256);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	memset(c1, 0, sizeof(double)*n*n)
-	bijk(a, b, c1, n, 512);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	bijk(a, b, c1, n, 1024);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-	bijk(a, b, c1, n, 2048);
-	maxDiff = CheckMaxDiff(c, c1, n);
-	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-
+	for (i = 0; i < 10; ++i) {
+		memset(c1, 0, sizeof(double)*n*n);
+		bijk(a, b, c1, n, 2);
+		maxDiff = CheckMaxDiff(c, c1, blocksize[i]);
+		printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	}
 	free(a);
 	free(b);
 	free(c);
