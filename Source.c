@@ -128,6 +128,30 @@ void skji(double a[], double b[], double c[], int n) {
 	printf("Simple kji, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
 }
 
+void bkji(double a[], double b[], double c[], int n, int B) {
+	struct timespec begin, end, diff;
+	double time;
+	int i, j, k, i1, j1, k1;
+
+	clock_gettime(CLOCK_MONOTONIC, &begin);
+
+	for (i = 0; i < n; i += B)
+		for (j = 0; j < n; j += B)
+			for (k = 0; k < n; k += B)
+				/* B x B mini matrix multiplications */
+				for (i1 = i; i1 < i + B; i1++)
+					for (j1 = j; j1 < j + B; j1++) {
+						register double r = c[i1*n + j1];
+						for (k1 = k; k1 < k + B; k1++)
+							r += a[i1*n + k1] * b[k1*n + j1];
+						c[i1*n + j1] = r;
+					}
+
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	diff = HDdiff(begin, end);
+	printf("Simple kji, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+}
+
 double CheckMaxDiff(double a[], double b[], int n) {
 	double ret = 0;
 	int i;
@@ -152,7 +176,7 @@ int main(int argc, char* argv[]) {
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
-	n = 20;
+	n = 128;
 	a = malloc(n * n * sizeof(double));
 	b = malloc(n * n * sizeof(double));
 	c = malloc(n * n * sizeof(double));
@@ -161,9 +185,10 @@ int main(int argc, char* argv[]) {
 		a[j] = (double)((rand() << 15) | rand()) / (double)rand();
 		b[j] = (double)((rand() << 15) | rand()) / (double)rand();
 	}
+	/*
 	memset(c, 0, sizeof(double)*n*n);
 	sijk(a, b, c, n);
-	printf("This is the reference result.");
+	printf("This is the reference result.\n");
 	memset(c1, 0, sizeof(double)*n*n);
 	sikj(a, b, c1, n);
 	CheckMaxDiff(c, c1, n);
@@ -179,11 +204,13 @@ int main(int argc, char* argv[]) {
 	memset(c1, 0, sizeof(double)*n*n);
 	skji(a, b, c1, n);
 	CheckMaxDiff(c, c1, n);
-	memset(c1, 0, sizeof(double)*n*n);
-
+	*/
 	for (i = 0; i < 6; ++i) {
 		B = blcokSize[i];
+		memset(c1, 0, sizeof(double)*n*n);
+		bijk(a, b, c1, n, B);
 	}
+
 	free(a);
 	free(b);
 	free(c);
