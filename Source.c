@@ -289,8 +289,8 @@ double CheckMaxDiff(double a[], double b[], int n) {
 
 int main(int argc, char* argv[]) {
 
-	int blcokSize[6] = { 2,4,8,16,32,64 };
-	int i, j, n, B;
+	//int blcokSize[6] = { 2,4,8,16,32,64 };
+	int i, j, n, B = 16;
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
@@ -303,7 +303,6 @@ int main(int argc, char* argv[]) {
 		a[j] = (double)((rand() << 15) | rand()) / (double)rand();
 		b[j] = (double)((rand() << 15) | rand()) / (double)rand();
 	}
-	/*
 	memset(c, 0, sizeof(double)*n*n);
 	sijk(a, b, c, n);
 	printf("This is the reference result.\n");
@@ -322,10 +321,8 @@ int main(int argc, char* argv[]) {
 	memset(c1, 0, sizeof(double)*n*n);
 	skji(a, b, c1, n);
 	CheckMaxDiff(c, c1, n);
-	*/
 
 	//BLOCKED ALGORITHM
-	/*
 	memset(c1, 0, sizeof(double)*n*n);
 	bijk(a, b, c1, n, B);
 	CheckMaxDiff(c, c1, n);
@@ -344,9 +341,8 @@ int main(int argc, char* argv[]) {
 	memset(c1, 0, sizeof(double)*n*n);
 	bkji(a, b, c1, n, B);
 	CheckMaxDiff(c, c1, n);
-	*/
 
-
+	/*
 	for (i = 0; i < 6; ++i) {
 		B = blcokSize[i];
 		memset(c1, 0, sizeof(double)*n*n);
@@ -377,6 +373,7 @@ int main(int argc, char* argv[]) {
 		memset(c1, 0, sizeof(double)*n*n);
 		bkji(a, b, c1, n, B);
 	}
+	*/
 	free(a);
 	free(b);
 	free(c);
