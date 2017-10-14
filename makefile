@@ -17,7 +17,7 @@ p23:
 	gcc -lrt -o p23 2p3.c
 	
 p24O0:
-	gcc -lrt -o p24O0 2p4.c
+	gcc -lrt -O0 -o p24O0 2p4.c
 	
 p24O1:
 	gcc -lrt -O1 -o p24O1 2p4.c
@@ -32,7 +32,7 @@ newgcc:
 	module load gcc-4.7.2
 
 p24N0:
-	gcc -lrt -o p24N0 2p4.c
+	gcc -lrt -O0 -o p24N0 2p4.c
 	
 p24N1:
 	gcc -lrt -O1 -o p24N1 2p4.c
@@ -51,7 +51,7 @@ run:
 	qsub p12.job
 	qsub p13.job
 	qsub p23.job
-	qsub p24O0.job
+	qsub p24O0.job	
 	qsub p24O1.job
 	qsub p24O2.job
 	qsub p24O3.job

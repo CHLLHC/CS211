@@ -95,7 +95,7 @@ double CheckMaxDiff(double a[], double b[], int n) {
 
 int main(int argc, char* argv[]) {
 
-	int i, j, n, B = 16;
+	int i, j, n;
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
@@ -114,10 +114,47 @@ int main(int argc, char* argv[]) {
 
 	//BLOCKED ALGORITHM
 	memset(c1, 0, sizeof(double)*n*n);
-	bijk(a, b, c1, n, B);
+	bijk(a, b, c1, n, 2);
 	maxDiff = CheckMaxDiff(c, c1, n);
 	printf("Maximum difference to the reference result is: %e\n", maxDiff);
-
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 4);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 8);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 16);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 32);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 64);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 128);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 256);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	memset(c1, 0, sizeof(double)*n*n)
+	bijk(a, b, c1, n, 512);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	bijk(a, b, c1, n, 1024);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
+	bijk(a, b, c1, n, 2048);
+	maxDiff = CheckMaxDiff(c, c1, n);
+	printf("Maximum difference to the reference result is: %e\n", maxDiff);
 
 	free(a);
 	free(b);
