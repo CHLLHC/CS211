@@ -1,4 +1,7 @@
-all: O0 O1 O2 O3 O3M
+all: git O0 O1 O2 O3 O3M
+
+git:
+	git pull
 
 O0:
 	gcc -o run0 Source.c
