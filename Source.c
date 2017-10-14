@@ -73,7 +73,7 @@ void bijk(double a[], double b[], double c[], int n, int B) {
 
 	clock_gettime(CLOCK_MONOTONIC, &end);
 	diff = HDdiff(begin, end);
-	printf("Blocked ijk, n=%d, B=%d, Time:%ld seconds and %ld nanoseconds.\n", n, B, diff.tv_sec, diff.tv_nsec);
+	printf("Blocked cache and register ijk, n=%d, B=%d, Time:%ld seconds and %ld nanoseconds.\n", n, B, diff.tv_sec, diff.tv_nsec);
 }
 
 double CheckMaxDiff(double a[], double b[], int n) {
@@ -109,13 +109,13 @@ int main(int argc, char* argv[]) {
 		b[j] = (double)((rand() << 15) | rand()) / (double)rand();
 	}
 	memset(c, 0, sizeof(double)*n*n);
-	//sijk(a, b, c, n);
+	sijk(a, b, c, n);
 	printf("This is the reference result.\n");
 
 	//BLOCKED ALGORITHM
 	memset(c1, 0, sizeof(double)*n*n);
 	bijk(a, b, c1, n, B);
-	//CheckMaxDiff(c, c1, n);
+	CheckMaxDiff(c, c1, n);
 
 	free(a);
 	free(b);
