@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
-	n = 2048;
+	n = 10;
 	a = malloc(n * n * sizeof(double));
 	b = malloc(n * n * sizeof(double));
 	c = malloc(n * n * sizeof(double));
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
 		b[j] = (double)((rand() << 15) | rand()) / (double)rand();
 	}
 	memset(c, 0, sizeof(double)*n*n);
-	Sijk(a, b, c, n);
+	sijk(a, b, c, n);
 
 
 	for (i = 0; i < 6; ++i) {
