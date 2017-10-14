@@ -3,10 +3,11 @@
 #include <string.h>
 #include <time.h>
 
+//HDdiff is from Stackoverflow
 struct timespec HDdiff(struct timespec start, struct timespec end)
 {
 	struct timespec temp;
-	if ((end.tv_nsec - start.tv_nsec)<0) {
+	if ((end.tv_nsec - start.tv_nsec) < 0) {
 		temp.tv_sec = end.tv_sec - start.tv_sec - 1;
 		temp.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
 	}
@@ -16,9 +17,6 @@ struct timespec HDdiff(struct timespec start, struct timespec end)
 	}
 	return temp;
 }
-
-
-
 
 void sijk(double a[], double b[], double c[], int n) {
 	struct timespec begin, end, diff;
@@ -35,8 +33,99 @@ void sijk(double a[], double b[], double c[], int n) {
 			c[i*n + j] = r;
 		}
 	clock_gettime(CLOCK_MONOTONIC, &end);
-	diff = HDdiff(begin,end);
+	diff = HDdiff(begin, end);
 	printf("Simple ijk, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+}
+
+void sjik(double a[], double b[], double c[], int n) {
+	struct timespec begin, end, diff;
+	double time;
+	int i, j, k;
+
+	clock_gettime(CLOCK_MONOTONIC, &begin);
+	for (j = 0; j < n; ++j)
+		for (i = 0; i < n; ++i) {
+			register double r = c[i*n + j];
+			for (k = 0; k < n; ++k) {
+				r += a[i*n + k] * b[k*n + j];
+			}
+			c[i*n + j] = r;
+		}
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	diff = HDdiff(begin, end);
+	printf("Simple jik, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+}
+
+void sikj(double a[], double b[], double c[], int n) {
+	struct timespec begin, end, diff;
+	double time;
+	int i, j, k;
+
+	clock_gettime(CLOCK_MONOTONIC, &begin);
+	for (i = 0; i < n; ++i)
+		for (k = 0; k < n; ++k) {
+			register double r = a[i*n + k];
+			for (j = 0; j < n; ++j) {
+				c[i*n + j] += r * b[k*n + j];
+			}
+		}
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	diff = HDdiff(begin, end);
+	printf("Simple ikj, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+}
+
+void skij(double a[], double b[], double c[], int n) {
+	struct timespec begin, end, diff;
+	double time;
+	int i, j, k;
+
+	clock_gettime(CLOCK_MONOTONIC, &begin);
+	for (k = 0; k < n; ++k)
+		for (i = 0; i < n; ++i) {
+			register double r = a[i*n + k];
+			for (j = 0; j < n; ++j) {
+				c[i*n + j] += r * b[k*n + j];
+			}
+		}
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	diff = HDdiff(begin, end);
+	printf("Simple kij, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+}
+
+void sjki(double a[], double b[], double c[], int n) {
+	struct timespec begin, end, diff;
+	double time;
+	int i, j, k;
+
+	clock_gettime(CLOCK_MONOTONIC, &begin);
+	for (j = 0; j < n; ++j)
+		for (k = 0; k < n; ++k) {
+			register double r = b[k*n + j];
+			for (i = 0; i < n; ++i) {
+				c[i*n + j] += a[i*n + k] * r;
+			}
+		}
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	diff = HDdiff(begin, end);
+	printf("Simple jki, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
+}
+
+void skji(double a[], double b[], double c[], int n) {
+	struct timespec begin, end, diff;
+	double time;
+	int i, j, k;
+
+	clock_gettime(CLOCK_MONOTONIC, &begin);
+	for (k = 0; k < n; ++k)
+		for (j = 0; j < n; ++j) {
+			register double r = b[k*n + j];
+			for (i = 0; i < n; ++i) {
+				c[i*n + j] += a[i*n + k] * r;
+			}
+		}
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	diff = HDdiff(begin, end);
+	printf("Simple kji, n=%d, Time:%ld seconds and %ld nanoseconds.\n", n, diff.tv_sec, diff.tv_nsec);
 }
 
 double CheckMaxDiff(double a[], double b[], int n) {
@@ -63,7 +152,7 @@ int main(int argc, char* argv[]) {
 	double *a, *b, *c, *c1;
 	double maxDiff;
 	srand(419);
-	n = 10;
+	n = 2048;
 	a = malloc(n * n * sizeof(double));
 	b = malloc(n * n * sizeof(double));
 	c = malloc(n * n * sizeof(double));
@@ -74,12 +163,30 @@ int main(int argc, char* argv[]) {
 	}
 	memset(c, 0, sizeof(double)*n*n);
 	sijk(a, b, c, n);
-
+	printf("This is the reference result.");
+	memset(c1, 0, sizeof(double)*n*n);
+	sikj(a, b, c1, n);
+	CheckMaxDiff(c, c1, n);
+	memset(c1, 0, sizeof(double)*n*n);
+	sjik(a, b, c1, n);
+	CheckMaxDiff(c, c1, n);
+	memset(c1, 0, sizeof(double)*n*n);
+	sjki(a, b, c1, n);
+	CheckMaxDiff(c, c1, n);
+	memset(c1, 0, sizeof(double)*n*n);
+	skij(a, b, c1, n);
+	CheckMaxDiff(c, c1, n);
+	memset(c1, 0, sizeof(double)*n*n);
+	skji(a, b, c1, n);
+	CheckMaxDiff(c, c1, n);
+	memset(c1, 0, sizeof(double)*n*n);
 
 	for (i = 0; i < 6; ++i) {
 		B = blcokSize[i];
 	}
 	free(a);
 	free(b);
+	free(c);
+	free(c1);
 	return 0;
 }
